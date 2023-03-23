@@ -6,6 +6,6 @@ export default class Car {
   }
 
   cloneCar() {
-    return (new this.constructor(undefined, undefined, undefined))
+    return (new this.constructor(undefined, undefined, undefined));
   }
 }
