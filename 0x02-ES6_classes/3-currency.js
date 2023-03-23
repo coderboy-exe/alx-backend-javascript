@@ -8,6 +8,8 @@ export default class Currency {
     return this._code;
   }
 
+  /* eslint-disable no-undef */
+  /* eslint-disable no-restricted-globals */
   set code(value) {
     this._code = code;
   }
@@ -19,6 +21,8 @@ export default class Currency {
   set name(value) {
     this._name = name;
   }
+  /* eslint-disable no-restricted-globals */
+  /* eslint-disable no-undef */
 
   displayFullCurrency() {
     return (`${this._name} (${this._code})`);
