@@ -1,6 +1,5 @@
 const setFromArray = (arr) => {
-  const mySet = new Set(arr);
-  return mySet;
+  return new Set(arr);
 };
 
 export default setFromArray;

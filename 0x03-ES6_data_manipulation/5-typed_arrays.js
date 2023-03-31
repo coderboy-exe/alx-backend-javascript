@@ -1,5 +1,5 @@
 const createInt8TypedArray = (length, position, value) => {
-  if (position >= length) {
+  if (position < 0 || position >= length) {
     return new Error('Position outside range');
   }
 
