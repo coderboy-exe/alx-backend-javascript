@@ -70,12 +70,12 @@ const app = http.createServer((req, res) => {
         })
         .catch((error) => {
           res.statusCode = 404;
-          res.end(`This is the list of our students:\n${result}`);
+          res.end(`Cannot load the database`);
         });
     } else {
       res.statusCode = 404;
       res.setHeader('Content-Type', 'text/plain');
-      res.end('Not Found');
+      res.end('Cannot load the database');
     }
   }
 });
