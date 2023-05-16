@@ -1,4 +1,5 @@
 const path = require('path');
+const { exec } = require('child_process');
 const fs = require('fs');
 
 function countStudents(filename) {
@@ -7,6 +8,11 @@ function countStudents(filename) {
   if (!fs.existsSync(resolvedFilename)) {
     throw new Error('Cannot load the database');
   } else {
+    exec(`wc -l ${resolvedFilename}`, (error, results) => {
+      const lineCount = results.split(' ')[0];
+      console.log(`Number of students: ${lineCount}`);
+    });
+
     const allFileContents = fs.readFileSync(resolvedFilename, 'utf-8');
     const lines = allFileContents.split(/\r?\n/);
     const countDict = {};
@@ -24,22 +30,8 @@ function countStudents(filename) {
         }
       }
     });
-
-    // Compute and print total student count
-    let totalStudents = 0;
     for (const field in countDict) {
-      if (Object.prototype.hasOwnProperty.call(countDict, field)) {
-        const count = countDict[field].length;
-        totalStudents += count;
-      }
-    }
-    console.log(`Number of students: ${totalStudents}`);
-
-    // Print individual counts for each field
-    for (const field in countDict) {
-      if (Object.prototype.hasOwnProperty.call(countDict, field)) {
-        console.log(`Number of students in ${field}: ${countDict[field].length}. List: ${countDict[field].join(', ')}`);
-      }
+      console.log(`Number of students in ${field}: ${countDict[field].length}. List: ${countDict[field].join(', ')}`);
     }
   }
 }
