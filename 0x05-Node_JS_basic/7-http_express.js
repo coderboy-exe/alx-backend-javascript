@@ -1,8 +1,8 @@
-const http = require('http');
+const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
-const hostname = '127.0.0.1';
+const app = express();
 const port = 1245;
 
 function countStudents(filename) {
@@ -52,34 +52,21 @@ function countStudents(filename) {
   }));
 }
 
-const app = http.createServer((req, res) => {
-  const { method, url } = req;
-
-  if (method === 'GET') {
-    if (url === '/') {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'text/plain');
-      res.end('Hello Holberton School!');
-    } else if (url === '/students') {
-      res.statusCode = 200;
-      res.setHeader('content-Type', 'text/plain');
-
-      countStudents(process.argv[2])
-        .then((result) => {
-          res.end(`This is the list of our students\n${result}`);
-        })
-        .catch((error) => {
-          res.statusCode = 404;
-          res.end(`This is the list of our students:\n${result}`);
-        });
-    } else {
-      res.statusCode = 404;
-      res.setHeader('Content-Type', 'text/plain');
-      res.end('Not Found');
-    }
-  }
+app.get('/', (req, res) => {
+  res.send('Hello Holberton School!');
 });
 
-app.listen(port, hostname, () => {});
+app.get('/students', (req, res) => {
+  countStudents(process.argv[2])
+    .then((result) => {
+      res.send(`This is the list of our students:\n${result}`);
+    })
+    .catch((error) => {
+      res.statusCode = 404;
+      res.send(`This is the list of our students:\n${error}`);
+    });
+});
+
+app.listen(port, () => {});
 
 module.exports = app;
