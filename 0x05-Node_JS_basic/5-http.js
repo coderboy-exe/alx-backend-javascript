@@ -66,12 +66,12 @@ const app = http.createServer((req, res) => {
 
       countStudents(process.argv[2])
         .then((result) => {
-          res.write(`This is the list of our students\n`);
-          res.end(result)
+          res.write('This is the list of our students\n');
+          res.end(result);
         })
         .catch(() => {
           res.statusCode = 404;
-          res.end(`Cannot load the database`);
+          res.end('Cannot load the database');
         });
     } else {
       res.statusCode = 404;
